@@ -1,0 +1,114 @@
+body {
+    background-image: linear-gradient(to left, rgb(255, 255, 255), rgb(150, 197, 241), rgb(150, 197, 241));
+
+}
+
+#box {
+    background-color: white;
+    width: 400px;
+    height: 650px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+    margin-top: 10px;
+    border-radius: 30px;
+    transition: box-shadow 0.7s;
+    border: 1px solid;
+}
+
+#box:hover {
+    box-shadow: 15px 15px;
+}
+
+.words {
+    font-family: "Inter", Sans-serif;
+    font-size: 15px;
+}
+
+img {
+    width: 100px;
+    height: 100px;
+}
+
+.input-data {
+    border: 1px solid rgb(0, 0, 0);
+    width: 200px;
+    height: 20px;
+    border: none;
+    border-bottom: 2px solid rgb(133, 196, 255);
+}
+
+.input-data:focus {
+    border-bottom: 3px solid rgb(133, 196, 255);
+    box-shadow: 0 0 0 0;
+    outline: 0;
+}
+
+#btn-register {
+    background-color: rgb(150, 197, 241);
+    border-radius: 15px;
+    margin-left: 40px;
+    width: 130px;
+    padding: 10px;
+    font-family: 'SF Mono', monospace;
+    font-size: 15px;
+}
+
+#btn-register:hover,
+#eye:hover {
+    filter: brightness(1.1);
+    transform: translateY(-0.1em);
+    cursor: pointer;
+}
+
+#btn-register:active,
+#eye:active {
+    transform: translateY(0);
+}
+
+#eye {
+    margin-left: 10px;
+}
+
+.error {
+    margin: 0 auto;
+    color: red;
+}
+
+button {
+    border: 0;
+    background-color: white;
+}
+
+.register-msg {
+    background-color: rgba(255, 0, 0, 0.589);
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+    margin-top: 10px;
+    border-radius: 5px;
+    border: 1px solid;
+    font-size: 16px;
+    font-family: "Inter", Sans-serif;
+    font-style: italic;
+    padding: 5px;
+}
+
+.register-msg-sucess {
+    background-color: rgba(9, 255, 0, 0.589);
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+    margin-top: 10px;
+    border-radius: 5px;
+    border: 1px solid;
+    font-size: 16px;
+    font-family: "Inter", Sans-serif;
+    font-style: italic;
+    padding: 5px;
+}
