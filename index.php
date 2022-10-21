@@ -33,12 +33,7 @@ $route->get("/produtos/{idProduct}","Web:viewProduct");
 
 $route->group("/app"); // agrupa em /app
 $route->get("/","App:home");
-$route->get("/listar","App:list");
-$route->get("/pdf","App:createPDF");
-$route->group(null); // desagrupo do /app
-$route->group("/admin"); // agrupa em /admin
-$route->get("/","Adm:home");
-$route->group(null); // desagrupo do /admin
+$route->get("/logout","App:logout");
 
 /*
  * Adm Routs

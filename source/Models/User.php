@@ -52,7 +52,9 @@ class User {
                 "id" => Connect::getInstance()->lastInsertId(),
                 "name" => $this->name
             ];
-            $_SESSION['user'] = $arrayUser;
+            $_SESSION["user"] = $arrayUser;
+            setcookie("user", $arrayUser["name"], time()+60*60*24, "/");
+            
             return true;
         } else {
             return false;
@@ -69,6 +71,12 @@ class User {
         if ($stmt->rowCount()==1) {
             $user = $stmt->fetch();
             if(password_verify($password, $user->password)){    
+                $arrayUser = [
+                    "id" => $user->id,
+                    "name" => $user->name
+                ];
+                $_SESSION["user"] = $arrayUser;
+                setcookie("user", $arrayUser["name"], time()+60*60*24, "/");
                 return true;
             }
             return false;

@@ -11,7 +11,7 @@ class Adm {
 
     public function __construct()
     {
-        $this->view = new Engine(CONF_VIEW_ADMIN, 'php');
+        $this->view = new Engine(CONF_VIEW_ADM, 'php');
     }
 
     public function home() : void

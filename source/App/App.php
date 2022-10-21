@@ -2,21 +2,31 @@
 
 namespace Source\App;
 
+use League\Plates\Engine;
+
 class App
 {
+    private $view;
+
+    public function __construct()
+    {
+         if (empty($_SESSION["user"]) || empty($_COOKIE["user"])) {
+             header("location:". url(""));
+         } 
+
+        $this->view = new Engine(CONF_VIEW_APP, 'php');
+    }
+
     public function home () : void 
     {
-        require __DIR__ . "/../../themes/app/home.php";
+        echo $this->view->render("home");
     }
 
-    public function list () : void 
+    public function logout () : void 
     {
-        require __DIR__ . "/../../themes/app/list.php";
-    }
-
-    public function createPDF () : void
-    {
-       require __DIR__ . "/../../themes/app/create-pdf.php";
+        session_destroy();
+        setcookie("user", "", time()-3600, "/");
+        header("location:". url(""));
     }
 }
 

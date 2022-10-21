@@ -175,7 +175,7 @@ class Web
                 if ($returnInsert == true) {
                     ?> <div class="register-msg-sucess">Cadastrando usuário...</div> 
                        <script>
-                        setTimeout(()=>{window.location.href = '<?=url("cadastro-endereco")?>'}, 2000)
+                        setTimeout(()=>{window.location.href = '<?=url("app")?>'}, 2000)
                        </script>
                     <?php
                 } else {
@@ -221,7 +221,7 @@ class Web
             if ($returnValidate == true) {
                 ?> <div class="register-msg-sucess">Login efetuado com sucesso! Redirecionando ...</div> 
                     <script>
-                    setTimeout(()=>{window.location.href = '<?=url("")?>'}, 2000)
+                    setTimeout(()=>{window.location.href = 'http://www.localhost/playground/app'}, 2000);
                     </script>
                 <?php
             } else {
