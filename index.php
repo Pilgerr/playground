@@ -34,6 +34,8 @@ $route->get("/produtos/{idProduct}","Web:viewProduct");
 $route->group("/app"); // agrupa em /app
 $route->get("/","App:home");
 $route->get("/logout","App:logout");
+$route->get("/perfil", "App:profile");
+$route->get("/carrinho", "App:cart");
 
 /*
  * Adm Routs

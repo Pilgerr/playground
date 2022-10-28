@@ -213,15 +213,16 @@ class Web
         {
             $email = $data["login-email"];
             $password = $data["login-password"];
+            $remember = $data["login-remember"];
 
             $user = new \Source\Models\User();
 
-            $returnValidate = $user->validateUser($email,$password);
+            $returnValidate = $user->validateUser($email,$password,$remember);
 
             if ($returnValidate == true) {
                 ?> <div class="register-msg-sucess">Login efetuado com sucesso! Redirecionando ...</div> 
                     <script>
-                    setTimeout(()=>{window.location.href = 'http://www.localhost/playground/app'}, 2000);
+                    setTimeout(()=>{window.location.href = '<?=url("app");?>'}, 2000);
                     </script>
                 <?php
             } else {
@@ -229,7 +230,11 @@ class Web
             }
         }
         }
-                echo $this->view->render("login");
+            if (!empty($_COOKIE["user"]["email"])) {
+                $emailCookie = $_COOKIE["user"]["email"];
+                echo $this->view->render("login",[ "emailCookie" => $emailCookie]);
+            }
+            echo $this->view->render("login");
             }
 
             public function viewProduct(array $data)

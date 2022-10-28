@@ -10,9 +10,9 @@ class App
 
     public function __construct()
     {
-         if (empty($_SESSION["user"]) || empty($_COOKIE["user"])) {
-             header("location:". url(""));
-         } 
+          if (empty($_SESSION["user"]) || empty($_COOKIE["user"])) {
+              header("location:". url(""));
+          } 
 
         $this->view = new Engine(CONF_VIEW_APP, 'php');
     }
@@ -27,6 +27,16 @@ class App
         session_destroy();
         setcookie("user", "", time()-3600, "/");
         header("location:". url(""));
+    }
+
+    public function profile () : void
+    {
+        echo $this->view->render("profile");
+    }
+
+    public function cart () : void
+    {
+        echo $this->view->render("cart");
     }
 }
 

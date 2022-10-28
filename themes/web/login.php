@@ -18,16 +18,14 @@
         <form action="<?=url("login")?>" method="post">
             <div class="words"> Email: </div> <br> <input type="text" name="login-email"
                 placeholder="   Insira seu email" id="email"
-                value="<?php if(isset($_POST['login-email'])) echo $_POST['login-email']; ?>">
+                value="<?php if(isset($_COOKIE['user']['email'])) echo $_COOKIE['user']['email']; ?>">
             <br> <br>
-            <div class="words"> Senha: </div> <br> <input type="password" name="login-password" id="password"
-            value="<?php if(isset($_POST['login-password'])) echo $_POST['login-password']; ?>">
+            <div class="words"> Senha: </div> <br> <input type="password" name="login-password" id="password">
 
             <button type="button"><i class="fas fa-eye" id="eye" onclick="eye()"></i></button>
 
             <br><br>
-            <input type="checkbox" name="login-remember"
-            value="<?php if(isset($_POST['login-remember'])) echo $_POST['login-remember']; ?>">
+            <input type="checkbox" name="login-remember" value="false">
             <span> Lembrar meu usuário </span>
             <br><br><br><br>
 

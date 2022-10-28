@@ -50,10 +50,11 @@ class User {
         if ($stmt->rowCount()==1) {
             $arrayUser = [
                 "id" => Connect::getInstance()->lastInsertId(),
-                "name" => $this->name
+                "name" => $this->name,
+                "email" => $this->email
             ];
             $_SESSION["user"] = $arrayUser;
-            setcookie("user", $arrayUser["name"], time()+60*60*24, "/");
+            setcookie("user", $arrayUser, time()+60*60*24, "/");
             
             return true;
         } else {
@@ -61,7 +62,7 @@ class User {
         }
     }
 
-    public function validateUser (string $email, string $password) : bool
+    public function validateUser (string $email, string $password, bool $remember) : bool
     {
         $query = "SELECT * FROM users WHERE email LIKE :email";
         $stmt = Connect::getInstance()->prepare($query);
@@ -73,10 +74,16 @@ class User {
             if(password_verify($password, $user->password)){    
                 $arrayUser = [
                     "id" => $user->id,
-                    "name" => $user->name
+                    "name" => $user->name,
+                    "email" => $email
                 ];
                 $_SESSION["user"] = $arrayUser;
-                setcookie("user", $arrayUser["name"], time()+60*60*24, "/");
+
+                if ($remember ==  true) {
+                    setcookie("user", json_encode($arrayUser), time()+60*60*24, "/");
+                    setcookie("userName", $user->name, time()+60*60*24, "/");
+                }
+                
                 return true;
             }
             return false;

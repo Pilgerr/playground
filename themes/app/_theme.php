@@ -21,9 +21,40 @@
           <li><a href="<?=url();?>">Home</a></li>
           <li><a href="<?=url("sobre");?>">About</a></li>
           <li><a href="<?=url("contato");?>">Contact</a></li>
-          <li><a href="<?=url("carrinho");?>">Cart</a></li>
-          <li><a href="<?=url("entrar");?>">Login</a></li>
-          <li><a href="<?=url("adm");?>">Adm</a></li>
+          <!-- <li><a href="<?=url("carrinho");?>">Cart</a></li>
+          <li><a href="<?=url("entrar");?>">Login</a></li> -->
+          <li>
+            <div class="dropdown">
+            <a href="<?=url();?>">
+              <img src="https://i.im.ge/2022/10/21/2NeiaL.user-icon.png" alt="Ícone Usuario">
+              </a>
+              <div class="dropdown-content">
+                  <a href="<?=url("entrar");?>">
+                  Olá <?=$_COOKIE["userName"]."!";?>
+                  </a>
+                  <a href="<?=url("app/perfil");?>">Perfil</a>
+                  <a href="<?=url("app/logout");?>">Sair</a>
+              </div>
+            </div>
+          </li>
+          <li>
+          <div class="dropdown">
+            <a href="<?=url();?>">
+              <img src="https://i.im.ge/2022/10/21/2NeUBc.cart-icon.png" alt="Ícone Carrinho de Compras">
+            </a>
+              <div class="dropdown-content">
+                  <a href="<?=url("carrinho");?>">
+                  Produtos: <?php if (!empty($_COOKIE["cartProducts"])) {
+                    echo $_COOKIE["cartProducts"]."!";
+                  } else {
+                    echo "0";
+                  }
+                  ?>
+                  </a>
+                  <a href="<?=url("app/carrinho");?>">Carrinho</a>
+              </div>
+            </div>
+          </li>
         </ul>
       </nav>
     </header>
