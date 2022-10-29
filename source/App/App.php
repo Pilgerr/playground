@@ -10,7 +10,7 @@ class App
 
     public function __construct()
     {
-          if (empty($_SESSION["user"]) || empty($_COOKIE["user"])) {
+          if (empty($_SESSION["user"])) {
               header("location:". url(""));
           } 
 
@@ -34,10 +34,6 @@ class App
         echo $this->view->render("profile");
     }
 
-    public function cart () : void
-    {
-        echo $this->view->render("cart");
-    }
 }
 
 ?>

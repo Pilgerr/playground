@@ -17,7 +17,7 @@ $route->namespace("Source\App");
 $route->get("/","Web:home");
 $route->get("/sobre","Web:about");
 $route->get("/contato","Web:contact");
-$route->get("/carrinho","Web:cart");
+$route->get("/produtos","Web:products");
 $route->get("/entrar","Web:loginAndRegister");
 $route->get("/cadastro-usuario","Web:registerUser");
 $route->post("/cadastro-usuario","Web:registerUser");
@@ -26,7 +26,10 @@ $route->post("/cadastro-endereco","Web:registerAddress");
 $route->get("/login","Web:login");
 $route->post("/login","Web:login");
 $route->get("/produtos/{idProduct}","Web:viewProduct");
-
+$route->get("/carrinho", "Web:cart");
+$route->get("/logout","Web:logout");
+//$route->post("/produtos/{idProduct}","Web:viewProductAdd");
+ 
 /*
  * App Routs
  */
@@ -35,7 +38,6 @@ $route->group("/app"); // agrupa em /app
 $route->get("/","App:home");
 $route->get("/logout","App:logout");
 $route->get("/perfil", "App:profile");
-$route->get("/carrinho", "App:cart");
 
 /*
  * Adm Routs

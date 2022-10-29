@@ -24,12 +24,12 @@ class Web
         echo $this->view->render("about"); 
     }
 
-    public function cart()
+    public function products()
     {
         $product = new Product();
         $products = $product->selectAllProducts();
 
-        echo $this->view->render("cart",[ "products" => $products ]);
+        echo $this->view->render("products",[ "products" => $products ]);
 
     }
 
@@ -213,7 +213,12 @@ class Web
         {
             $email = $data["login-email"];
             $password = $data["login-password"];
-            $remember = $data["login-remember"];
+
+            if(!empty($data["login-remember"])){
+                $remember = true;
+            } else {
+                $remember = false;
+            }
 
             $user = new \Source\Models\User();
 
@@ -245,6 +250,13 @@ class Web
                 }
                 echo $this->view->render("view-product",[ "products" => $products]);
             }
+            public function cart () : void
+            {
+                $product = new Product();
+                $products = $product->selectAllProducts();
+        
+                echo $this->view->render("cart",[ "products" => $products ]);
+            }
 
     public function error(array $data) : void
     {
@@ -254,6 +266,12 @@ class Web
             "title" => "Erro {$data["errcode"]} | " . CONF_SITE_NAME,
             "error" => $data["errcode"]
         ]);
+    }
+
+    public function logout () : void 
+    {
+        session_destroy();
+        header("location:". url("carrinho"));
     }
 
 }

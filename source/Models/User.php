@@ -82,8 +82,7 @@ class User {
                 if ($remember ==  true) {
                     setcookie("user", json_encode($arrayUser), time()+60*60*24, "/");
                     setcookie("userName", $user->name, time()+60*60*24, "/");
-                }
-                
+                } 
                 return true;
             }
             return false;
