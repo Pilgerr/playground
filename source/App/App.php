@@ -33,26 +33,38 @@ class App
     public function profile (array $data) 
     {
         if(!empty($data)){
-            $data = filter_var_array($data,FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            if(!empty($_FILES['edit-photo']['tmp_name'])) {
+                $upload = uploadImage($_FILES['edit-photo']);
+                unlink($_SESSION["userPhoto"]);
+            } else {
+                // se não houve alteração da imagem, manda a imagem que está na sessão
+                $upload = $_SESSION["userPhoto"];
+            }
             $user = new User(
                 $data['edit-email'], 
                 $data['edit-name'], 
                 $data['edit-phoneNumber'], 
                 NULL,
                 $data['edit-dtBorn'], 
-                $data['edit-document']
+                $data['edit-document'],
+                $upload
             );
+            var_dump($upload);
             $returnInsert = $user->updateUser($data['edit-id']);
             if ($returnInsert == true) {
-                $json = [
-                    "message" => "Sucesso"
+                $userJson = [
+                    "type" => "alert-success",
+                    "name" => $user->name,
+                    "email" => $user->email,
+                    "photo" => url($user->photo)
                 ];
-                echo json_encode($json);
+                echo json_encode($userJson);
             } else {
-                $json = [
-                    "message" => "Erro"
+                $userJson = [
+                    "type" => "alert-error",
+                    "photo" => CONF_SITE_LOGO
                 ];
-                echo json_encode($json);
+                echo json_encode($userJson);
             }
             return;
 

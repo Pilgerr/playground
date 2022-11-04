@@ -96,7 +96,7 @@ class Web
             if ($returnInsert == true) {
                 ?> <div class="register-msg-sucess">Cadastrando endereço...</div> 
                        <script>
-                        setTimeout(()=>{window.location.href = '<?=url("")?>'}, 2000)
+                        setTimeout(()=>{window.location.href = '<?=url("app")?>'}, 2000)
                        </script>
                 <?php
             } else {
@@ -175,7 +175,7 @@ class Web
                 if ($returnInsert == true) {
                     ?> <div class="register-msg-sucess">Cadastrando usuário...</div> 
                        <script>
-                        setTimeout(()=>{window.location.href = '<?=url("app")?>'}, 2000)
+                        setTimeout(()=>{window.location.href = '<?=url("cadastro-endereco")?>'}, 2000)
                        </script>
                     <?php
                 } else {

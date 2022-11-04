@@ -27,3 +27,8 @@ define("CONF_VIEW_ADM", __DIR__ . "/../../themes/adm");
 define("CONF_SITE_NAME", "Play Ground®");
 define("CONF_SITE_FAVICON", "assets/svg/favicon.svg");
 define("CONF_SITE_LOGO", "https://i.im.ge/2022/08/16/OOE4hC.logo-play.png");
+
+// UPLOAD
+
+define("CONF_UPLOAD_DIR", "storage");
+define("CONF_UPLOAD_IMAGE_DIR", "images");

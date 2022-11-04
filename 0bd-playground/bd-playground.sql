@@ -10,6 +10,7 @@ CREATE TABLE `users` (
                          `password` varchar(255) NOT NULL,
                          `dtBorn` date NOT NULL,
                          `document` char(14) DEFAULT NULL,
+                         `photo` varchar(255), 
                          `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
                          `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
                          PRIMARY KEY (`id`),
