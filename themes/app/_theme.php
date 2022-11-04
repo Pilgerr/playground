@@ -56,7 +56,7 @@
                   }
                   ?>
                   </a>
-                  <a href="<?=url("app/carrinho");?>">Carrinho</a>
+                  <a href="<?=url("carrinho");?>">Carrinho</a>
               </div>
             </div>
           </li>

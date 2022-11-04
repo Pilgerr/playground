@@ -38,6 +38,7 @@ $route->group("/app"); // agrupa em /app
 $route->get("/","App:home");
 $route->get("/logout","App:logout");
 $route->get("/perfil", "App:profile");
+$route->post("/perfil", "App:profile");
 
 /*
  * Adm Routs

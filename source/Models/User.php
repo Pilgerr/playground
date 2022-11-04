@@ -91,4 +91,39 @@ class User {
         }
     }
 
+    public function updateUser(int $id)
+    {
+        $query = "UPDATE users SET email = :email, name = :name, phoneNumber = :phoneNumber, dtBorn = :dtBorn, document = :document WHERE id = :id";
+                              
+        $stmt = Connect::getInstance()->prepare($query);
+        $stmt->bindParam(":email",$this->email);
+        $stmt->bindParam(":name",$this->name);
+        $stmt->bindParam(":phoneNumber",$this->phoneNumber); 
+        $stmt->bindParam(":dtBorn", $this->dtBorn);
+        $stmt->bindParam(":document", $this->document);
+        $stmt->bindParam(":id",$id);
+        $stmt->execute();
+
+        if ($stmt->rowCount()==1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function selectUser(int $id)
+    {
+        $query = "SELECT * FROM users WHERE id = :id";
+        $stmt = Connect::getInstance()->prepare($query);
+        $stmt->bindParam(":id", $id);
+        $stmt->execute();
+        $userLoged = $stmt->fetch();
+
+        if ($stmt->rowCount()==1) {
+            return $userLoged;
+        } else {
+            echo "Erro";
+        }
+    }
+
 }
