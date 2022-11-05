@@ -30,10 +30,10 @@
               </a>
               <div class="dropdown-content">
                   <a href="<?=url("entrar");?>">
-                  Olá <?php if (isset($_COOKIE['userName'])) {
-                    echo $_COOKIE["userName"]."!";
-                  } elseif (isset($_SESSION['user']['name'])) {
+                  Olá <?php if (isset($_SESSION['user']['name'])) {
                     echo $_SESSION['user']['name']."!";
+                  } elseif (isset($_COOKIE['userName'])) {
+                    echo $_COOKIE["userName"]."!";
                   }
                   ?>
                   </a>

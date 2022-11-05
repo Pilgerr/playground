@@ -37,6 +37,7 @@
 	background: url("bg.jpg") no-repeat center center;
 	background-size: cover;
 	height: 92vh;
+	margin-bottom: 550px;
   }
   
   .nav-list, .footer-list {

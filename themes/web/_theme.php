@@ -30,7 +30,24 @@
               </a>
               <div class="dropdown-content">
                   <a href="<?=url("entrar");?>">
-                  Olá visitante!
+                  Olá <?php if (isset($_SESSION['user']['name'])) {
+                    echo $_SESSION['user']['name']."!";
+                                        ?>
+                    <a href="<?=url("app/perfil");?>">Perfil</a>
+                    <a href="<?=url("app/logout");?>">Sair</a>
+                    <?php
+                  } elseif (isset($_COOKIE['userName'])) {
+                    echo $_COOKIE["userName"]."!";
+                    ?>
+                    <a href="<?=url("app/perfil");?>">Perfil</a>
+                    <a href="<?=url("app/logout");?>">Sair</a>
+                    <?php
+                  } else {
+                    ?>
+                    Visitante!
+                    <?php
+                  }
+                  ?>
                   </a>
               </div>
             </div>

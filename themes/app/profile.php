@@ -1,11 +1,22 @@
 <?php $this->layout("_theme"); ?>
 <link rel="stylesheet" href="<?=url("assets/app/");?>css/edit-profile.css">
-<main>
-    <div class="profile">
+<main class="main-profile">
+    <div class="container-profile">
         <ul class="list-profile">
             <div class="content">
             <form method="post" id="formProfile">
 
+            <?php
+            if(!empty($userLoged->photo)){
+                ?>
+                <img src="<?= url($userLoged->photo); ?>" class="#" id="photoShow" alt="Foto Perfil"><br>
+            <?php
+            } else {
+            ?>
+                <img src="https://i.im.ge/2022/11/05/2vkLGY.without-photo.png" class="#" id="photoShow" alt="Foto Perfil"><br>
+            <?php
+            }
+            ?>
             <input class="input-register" type="number" name="edit-id" value="<?=$userLoged->id?>" readonly>
             <input class="input-register" type="email" name="edit-email" value="<?=$userLoged->email?>">
             <input class="input-register" type="text" name="edit-name" value="<?=$userLoged->name?>">
@@ -15,13 +26,6 @@
             <input class="input-register" type="file" name="edit-photo">
             <br><br><br>
             <input class="input-edit" type="submit" value="Salvar alteração">
-            <?php
-            if(!empty($userLoged->photo)):
-                ?>
-                <img src="<?= url($userLoged->photo); ?>" class="#" id="photoShow" alt="Foto Perfil">
-            <?php
-            endif;
-            ?>
             </div>
             </form>
         </ul>
