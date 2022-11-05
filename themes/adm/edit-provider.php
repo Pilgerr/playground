@@ -2,6 +2,7 @@
 <link rel="stylesheet" href="<?=url("assets/adm/");?>css/edit-provider.css">
 <main>
     <?php
+        if (!empty($providers)) {
             foreach ($providers as $provider){
         ?>
     <div class="providers">
@@ -20,6 +21,12 @@
         </ul>
     </div>
     <?php
-            }
+        }
+        }
+        else {
+        ?>
+            <h1 class="h1-error">Nenhum fornecedor encontrado, cadastre algum <a href="<?=url("adm/cadastro-fornecedor");?>">aqui!</a></h1>
+        <?php 
+        }
         ?>
 </main>

@@ -48,7 +48,7 @@ class Provider {
         if ($stmt->rowCount()>0) {
             return $providers;
         } else {
-            echo "Erro";
+            return false;
         }
     }
 

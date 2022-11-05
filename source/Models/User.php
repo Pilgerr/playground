@@ -57,8 +57,7 @@ class User {
                 "email" => $this->email
             ];
             $_SESSION["user"] = $arrayUser;
-            //setcookie("user", $arrayUser, time()+60*60*24, "/");
-            
+
             return true;
         } else {
             return false;
@@ -139,7 +138,7 @@ class User {
         if ($stmt->rowCount()==1) {
             return $userLoged;
         } else {
-            echo "Erro";
+            return false;
         }
     }
 

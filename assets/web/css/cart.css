@@ -97,3 +97,9 @@ a {
     color: black;
     font-family: "Inter var", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, sans-serif;
 }
+
+.h1-error {
+    margin-top: 5%;
+    margin-left: 33.3%;
+    font-style: italic;
+}

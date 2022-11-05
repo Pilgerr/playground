@@ -2,6 +2,7 @@
 <link rel="stylesheet" href="<?=url("assets/adm/");?>css/edit-product.css">
 <main>
     <?php
+        if (!empty($products)) {
             foreach ($products as $product){
         ?>
     <div class="products">
@@ -21,6 +22,12 @@
         </ul>
     </div>
     <?php
-            }
+        }
+        }
+        else {
+        ?>
+            <h1 class="h1-error">Nenhum produto encontrado, cadastre algum <a href="<?=url("adm/cadastro-produto");?>">aqui!</a></h1>
+        <?php 
+        }
         ?>
 </main>

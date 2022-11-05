@@ -55,7 +55,7 @@ class Product {
         if ($stmt->rowCount()>0) {
             return $products;
         } else {
-            echo "Erro";
+            return false;
         }
     }
 
