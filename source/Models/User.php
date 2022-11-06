@@ -120,7 +120,9 @@ class User {
                 "email" => $user->email
             ];
             $_SESSION["user"] = $arrayUser;
-            $_SESSION['userPhoto'] = $this->photo;
+            if (!isset($_SESSION["userPhoto"])) {
+                $_SESSION["userPhoto"] = $this->photo;
+            }
             return true;
         } else {
             return false;

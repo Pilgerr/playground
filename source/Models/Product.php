@@ -73,12 +73,16 @@ class Product {
         }
     }
 
-    public function updateProduct(int $id, string $available)
+    public function updateProduct(int $id)
     {
-        $query = "UPDATE products SET available = :available WHERE id = :id";
+        $query = "UPDATE products SET image = :image, name = :name, price = :price, description = :description, available = :available WHERE id = :id";
         $stmt = Connect::getInstance()->prepare($query);
+        $stmt->bindParam(":image", $this->image);
+        $stmt->bindParam(":name", $this->name);
+        $stmt->bindParam(":price", $this->price);
+        $stmt->bindParam(":description", $this->description);
+        $stmt->bindParam(":available", $this->available);
         $stmt->bindParam(":id", $id);
-        $stmt->bindParam(":available", $available);
         $stmt->execute();
         $products = $stmt->fetchAll();
         if($stmt->rowCount() == 0){

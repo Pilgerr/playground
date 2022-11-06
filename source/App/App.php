@@ -27,6 +27,7 @@ class App
     {
         session_destroy();
         setcookie("user", "", time()-3600, "/");
+        setcookie("userName", "", time()-3600, "/");
         header("location:". url(""));
     }
 
@@ -49,11 +50,10 @@ class App
                 $data['edit-document'],
                 $upload
             );
-            var_dump($upload);
             $returnInsert = $user->updateUser($data['edit-id']);
             if ($returnInsert == true) {
                 $userJson = [
-                    "type" => "alert-success",
+                    "type" => "input-edit-success",
                     "name" => $user->name,
                     "email" => $user->email,
                     "photo" => url($user->photo)

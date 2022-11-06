@@ -41,8 +41,14 @@ class Adm {
     public function editProduct(array $data)
     {
         if ($data) {
-            $product = new Product();
-            $returnInsert = $product->updateProduct($data['edit-id'], $data['edit-available']);
+            $product = new Product(
+                $data['edit-image'],
+                $data['edit-name'],
+                $data['edit-price'],
+                $data['edit-description'],
+                $data['edit-available']
+            );
+            $returnInsert = $product->updateProduct($data['edit-id']);
             if ($returnInsert == false) {
                 header("location:". url("adm/edicao-produto"));
             } else {

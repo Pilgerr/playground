@@ -25,7 +25,7 @@
             <input class="input-register" type="text" name="edit-document" value="<?=$userLoged->document?>">
             <input class="input-register" type="file" name="edit-photo">
             <br><br><br>
-            <input class="input-edit" type="submit" value="Salvar alteração">
+            <input class="input-edit" type="submit" value="Salvar alteração" id="input-edit">
             </div>
             </form>
         </ul>
@@ -34,6 +34,7 @@
 </main>
 <script type="text/javascript" async>
     const form = document.querySelector("#formProfile");
+    const input_edit = document.querySelector("#input-edit");
     form.addEventListener("submit", async (e) => {
         e.preventDefault(); //nao faz reload 
         const dataUser = new FormData(form); 
@@ -44,12 +45,14 @@
         const user = await data.text();
         console.log(user);
         if(user) {
-            if(user.type === "alert-success") {
+            if(user.type === "input-edit-success") {
                 photoShow.setAttribute("src",user.photo);
             }
-            // message.textContent = user.message;
-            // message.classList.remove("alert-primary", "alert-danger");
-            // message.classList.add(`${user.type}`);
+
+            input_edit.classList.remove("input-edit");
+            //input_edit.classList.add(`${user.type}`);
+            input_edit.classList.add("input-edit-sucess");
+            input_edit.value = "Alterações realizadas!";
         }
     });
 </script>
