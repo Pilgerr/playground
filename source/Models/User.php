@@ -11,7 +11,7 @@ class User {
     private $password;
     private $dtBorn;
     private $document;
-    private $photo;
+    public $photo;
 	/**
 	 * @param $email mixed 
 	 * @param $name mixed 
@@ -77,12 +77,13 @@ class User {
                 $arrayUser = [
                     "id" => $user->id,
                     "name" => $user->name,
-                    "email" => $email
+                    "email" => $email,
+                    "photo" => $user->photo
                 ];
                 $_SESSION["user"] = $arrayUser;
 
                 if ($remember ==  true) {
-                    setcookie("user", json_encode($arrayUser), time()+60*60*24, "/");
+                    setcookie("userId", $user->id, time()+60*60*24, "/");
                     setcookie("userName", $user->name, time()+60*60*24, "/");
                 } 
                 return true;
@@ -109,20 +110,18 @@ class User {
 
         $query = "SELECT * FROM users WHERE id LIKE :id";
         $stmt2 = Connect::getInstance()->prepare($query);
-        $stmt2->bindParam(":email", $id);
+        $stmt2->bindParam(":id", $id);
         $stmt2->execute();
-        $user = $stmt2->fetch();
 
         if ($stmt1->rowCount()==1) {
+            $user = $stmt2->fetch();
             $arrayUser = [
-                "id" => $user->id,
-                "name" => $user->name,
-                "email" => $user->email
+                "id" => $this->id,
+                "name" => $this->name,
+                "email" => $this->email,
+                "photo" => $this->photo
             ];
             $_SESSION["user"] = $arrayUser;
-            if (!isset($_SESSION["userPhoto"])) {
-                $_SESSION["userPhoto"] = $this->photo;
-            }
             return true;
         } else {
             return false;

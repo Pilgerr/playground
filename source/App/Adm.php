@@ -26,7 +26,8 @@ class Adm {
                 $data['register-image'],
                 $data['register-name'],
                 $data['register-price'],
-                $data['register-description']
+                $data['register-description'],
+                "on"
             );
             $returnInsert = $product->insertProduct();
             if ($returnInsert == true) {

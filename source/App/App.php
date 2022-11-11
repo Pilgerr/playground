@@ -11,7 +11,7 @@ class App
 
     public function __construct()
     {
-          if (empty($_SESSION["user"])) {
+          if (empty($_SESSION["user"]) && empty($_COOKIE['userName'])) {
               header("location:". url(""));
           } 
 
@@ -26,7 +26,7 @@ class App
     public function logout () : void 
     {
         session_destroy();
-        setcookie("user", "", time()-3600, "/");
+        setcookie("userId", "", time()-3600, "/");
         setcookie("userName", "", time()-3600, "/");
         header("location:". url(""));
     }
@@ -36,10 +36,10 @@ class App
         if(!empty($data)){
             if(!empty($_FILES['edit-photo']['tmp_name'])) {
                 $upload = uploadImage($_FILES['edit-photo']);
-                unlink($_SESSION["userPhoto"]);
+                unlink($_SESSION["user"]["photo"]);
             } else {
-                // se não houve alteração da imagem, manda a imagem que está na sessão
-                $upload = $_SESSION["userPhoto"];
+                // se não houve alteração da imagem, manda a imagem que está no cookie
+                $upload = $_SESSION["user"]["photo"];
             }
             $user = new User(
                 $data['edit-email'], 
@@ -51,18 +51,16 @@ class App
                 $upload
             );
             $returnInsert = $user->updateUser($data['edit-id']);
+
             if ($returnInsert == true) {
                 $userJson = [
                     "type" => "input-edit-success",
-                    "name" => $user->name,
-                    "email" => $user->email,
                     "photo" => url($user->photo)
                 ];
                 echo json_encode($userJson);
             } else {
                 $userJson = [
-                    "type" => "alert-error",
-                    "photo" => CONF_SITE_LOGO
+                    "type" => "input-edit-error"
                 ];
                 echo json_encode($userJson);
             }
@@ -70,7 +68,13 @@ class App
 
         } else {
             $user = new User();
-            $userLoged = $user->selectUser($_SESSION['user']['id']);
+            if (!isset($_SESSION['user']['id'])) {
+                $id = $_COOKIE['userId'];
+            } else {
+                $id = $_SESSION['user']['id'];
+            }
+            
+            $userLoged = $user->selectUser($id);
     
             echo $this->view->render("profile",[ "userLoged" => $userLoged ]);
         }

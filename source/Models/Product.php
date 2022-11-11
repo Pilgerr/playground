@@ -19,12 +19,13 @@ class Product {
 	function __construct(?string $image = NULL, 
                             ?string $name = NULL, 
                             ?string $price = NULL, 
-                            ?string $description = NULL) {
+                            ?string $description = NULL,
+                            ?string $available = NULL) {
 	    $this->image = $image;
 	    $this->name = $name;
 	    $this->price = $price;
 	    $this->description = $description;
-	    $this->available = "on";
+	    $this->available = $available;
 	}
 
     public function insertProduct() : bool
