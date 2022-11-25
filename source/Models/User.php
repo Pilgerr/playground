@@ -86,6 +86,17 @@ class User {
                     setcookie("userId", $user->id, time()+60*60*24, "/");
                     setcookie("userName", $user->name, time()+60*60*24, "/");
                 } 
+
+                $this->id = $user->id;
+                $this->email = $user->email;
+                $this->name= $user->name;
+                $this->phoneNumber = $user->phoneNumber;
+                $this->password = $user->phoneNumber;
+                $this->dtBorn = $user->dtBorn;
+                $this->document = $user->document;
+                $this->photo = $user->photo;
+
+
                 return true;
             }
             return false;
@@ -205,4 +216,15 @@ class User {
 		$this->photo = $photo;
 		return $this;
 	}
+
+    public function getArray() : array
+    {
+        return ["user" => [
+            "id" => $this->getId(),
+            "name" => $this->getName(),
+            "email" => $this->getEmail(),
+            "document" => $this->getDocument(),
+            "photo" => $this->getPhoto()
+        ]];
+    }
 }
