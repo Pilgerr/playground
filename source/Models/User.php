@@ -96,7 +96,6 @@ class User {
                 $this->document = $user->document;
                 $this->photo = $user->photo;
 
-
                 return true;
             }
             return false;

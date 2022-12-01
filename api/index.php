@@ -10,6 +10,8 @@ $route = new Router(url(), ":");
 $route->namespace("Source\App");
 
 $route->get("/user","Api:getUser");
+$route->get("/product","Api:getProduct");
+$route->get("/provider","Api:getProvider");
 
 $route->dispatch();
 

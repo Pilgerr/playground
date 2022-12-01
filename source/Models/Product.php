@@ -66,11 +66,18 @@ class Product {
         $stmt = Connect::getInstance()->prepare($query);
         $stmt->bindParam(":idProduct",$idProduct);
         $stmt->execute();
-        $products = $stmt->fetchAll();
+        $product = $stmt->fetch();
         if($stmt->rowCount() == 0){
             return false;
         } else {
-            return $products;
+
+            $this->image = $product->image;
+            $this->name = $product->name;
+            $this->price = $product->price;
+            $this->description = $product->description;
+            $this->available = $product->available;
+
+            return $product;
         }
     }
 
@@ -93,4 +100,94 @@ class Product {
         }
     }
     
+	/**
+	 * @return mixed
+	 */
+	public function getImage() {
+		return $this->image;
+	}
+	
+	/**
+	 * @param mixed $image 
+	 * @return self
+	 */
+	public function setImage($image): self {
+		$this->image = $image;
+		return $this;
+	}
+	
+	/**
+	 * @return mixed
+	 */
+	public function getName() {
+		return $this->name;
+	}
+	
+	/**
+	 * @param mixed $name 
+	 * @return self
+	 */
+	public function setName($name): self {
+		$this->name = $name;
+		return $this;
+	}
+	
+	/**
+	 * @return mixed
+	 */
+	public function getPrice() {
+		return $this->price;
+	}
+	
+	/**
+	 * @param mixed $price 
+	 * @return self
+	 */
+	public function setPrice($price): self {
+		$this->price = $price;
+		return $this;
+	}
+	
+	/**
+	 * @return mixed
+	 */
+	public function getDescription() {
+		return $this->description;
+	}
+	
+	/**
+	 * @param mixed $description 
+	 * @return self
+	 */
+	public function setDescription($description): self {
+		$this->description = $description;
+		return $this;
+	}
+	
+	/**
+	 * @return mixed
+	 */
+	public function getAvailable() {
+		return $this->available;
+	}
+	
+	/**
+	 * @param mixed $available 
+	 * @return self
+	 */
+	public function setAvailable($available): self {
+		$this->available = $available;
+		return $this;
+	}
+
+    public function getArray() : array
+    {
+        return ["product" => [
+            "image" => $this->getImage(),
+            "name" => $this->getName(),
+            "price" => $this->getPrice(),
+            "description" => $this->getDescription(),
+            "available" => $this->getAvailable()
+        ]];
+    }
 }
