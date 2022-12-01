@@ -74,7 +74,6 @@ class Api
         
     }
 
-
     public function getProvider()
     {
         $headers = getallheaders();
