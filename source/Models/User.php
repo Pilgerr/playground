@@ -153,6 +153,35 @@ class User {
         }
     }
 
+    public function selectAllUsers()
+    {
+        $query = "SELECT * FROM users";
+        $stmt = Connect::getInstance()->prepare($query);
+        $stmt->execute();
+
+        if ($stmt->rowCount()>0) {
+            return $stmt->fetchAll();
+        } else {
+            return false;
+        }
+    }
+
+    public function updatePhotoUser(string $photo, int $id)
+    {
+        $query = "UPDATE users SET photo = :photo WHERE id = :id";
+                              
+        $stmt = Connect::getInstance()->prepare($query);
+        $stmt->bindParam(":photo", $photo);
+        $stmt->bindParam(":id",$id);
+        $stmt->execute();
+
+        if ($stmt->rowCount()==1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 	public function getId() {
 		return $this->id;
 	}

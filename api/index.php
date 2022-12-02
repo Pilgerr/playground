@@ -9,9 +9,24 @@ $route = new Router(url(), ":");
 
 $route->namespace("Source\App");
 
+/* GET ROUTES */
+
 $route->get("/user","Api:getUser");
+$route->get("/users","Api:getUsers");
 $route->get("/product","Api:getProduct");
+$route->get("/products","Api:getProducts");
 $route->get("/provider","Api:getProvider");
+$route->get("/providers","Api:getProviders");
+
+/* POST ROUTES */
+
+// http://www.localhost/playground/api/user/post/email//name//phoneNumber//password//dtBorn/NAO ACEITOU 00/00/0000/document/
+$route->post("/user/post/email/{email}/name/{name}/phoneNumber/{phoneNumber}/password/{password}/dtBorn/{dtBorn}/document/{document}","Api:insertUser");
+
+/* PUT ROUTES */
+
+// http://www.localhost/playground/api/user/put/photo//id/
+$route->put("/user/put/photo/{photo}/id/{id}","Api:updateUser");
 
 $route->dispatch();
 

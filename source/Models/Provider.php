@@ -43,10 +43,9 @@ class Provider {
         $query = "SELECT * FROM providers";
         $stmt = Connect::getInstance()->prepare($query);
         $stmt->execute();
-        $providers = $stmt->fetchAll();
 
         if ($stmt->rowCount()>0) {
-            return $providers;
+            return $stmt->fetchAll();
         } else {
             return false;
         }

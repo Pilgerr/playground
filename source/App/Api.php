@@ -8,7 +8,6 @@ use Source\Models\User;
 
 class Api
 {
-
     public function __construct()
     {
         header('Content-Type: application/json; charset=UTF-8');
@@ -44,6 +43,51 @@ class Api
 
     }
 
+    public function getUsers()
+    {
+        $users = new User();
+        echo json_encode($users->selectAllUsers(),JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+    }
+
+    public function insertUser(array $data)
+    {
+        if (!empty($data)) {
+            $user = new User(
+                $data["email"],
+                $data["name"],
+                $data["phoneNumber"],
+                $data["password"],
+                $data["dtBorn"], //nao aceitou a formatação da data 00/00/0000 
+                $data["document"],
+                NUll
+            );
+            $user->insertUser();
+        } else {
+            $response = [
+                "code" => 400,
+                "type" => "bad_request",
+                "message" => "Informe todos os dados do usuário!"
+            ];
+            echo json_encode($response,JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+            return;
+        } 
+    }
+    public function updateUser(array $data)
+    {
+        if (!empty($data)) {
+            $user = new User();
+            $user->updatePhotoUser($data["photo"], $data["id"]);
+        } else {
+            $response = [
+                "code" => 400,
+                "type" => "bad_request",
+                "message" => "Informe todos os dados do usuário!"
+            ];
+            echo json_encode($response,JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+            return;
+        }
+    }
+
     public function getProduct()
     {
         $headers = getallheaders();
@@ -74,6 +118,12 @@ class Api
         
     }
 
+    public function getProducts()
+    {
+        $products = new Product();
+        echo json_encode($products->selectAllProducts(),JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+    }
+
     public function getProvider()
     {
         $headers = getallheaders();
@@ -102,6 +152,12 @@ class Api
 
         echo json_encode($provider->getArray(),JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
         
+    }
+
+    public function getProviders()
+    {
+        $providers = new Provider();
+        echo json_encode($providers->selectAllProviders(),JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
     }
 
 }

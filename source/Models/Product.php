@@ -51,10 +51,9 @@ class Product {
         $query = "SELECT * FROM products";
         $stmt = Connect::getInstance()->prepare($query);
         $stmt->execute();
-        $products = $stmt->fetchAll();
 
         if ($stmt->rowCount()>0) {
-            return $products;
+            return $stmt->fetchAll();
         } else {
             return false;
         }
