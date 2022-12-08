@@ -261,7 +261,7 @@ class Web
             {
                 if(!empty($data)){
                     $product = new Product();
-                    $products = $product->findProductById($data["idProduct"]);
+                    $products = $product->selectProduct($data["idProduct"]);
                 }
                 echo $this->view->render("view-product",[ "products" => $products]);
             }

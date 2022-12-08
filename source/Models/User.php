@@ -40,7 +40,7 @@ class User {
 
     public function insertUser() : bool
     {
-        $query = "INSERT INTO users VALUES (NULL, :email, :name, :phoneNumber, :password, :dtBorn, :document, NULL, false, NULL, NULL)";
+        $query = "INSERT INTO users VALUES (NULL, :email, :name, :phoneNumber, :password, :dtBorn, :document, NULL, 'false', NULL, NULL)";
         $stmt = Connect::getInstance()->prepare($query);
         $stmt->bindParam(":email", $this->email);
         $stmt->bindParam(":name", $this->name);
@@ -96,6 +96,7 @@ class User {
                 $this->dtBorn = $user->dtBorn;
                 $this->document = $user->document;
                 $this->photo = $user->photo;
+                $this->adm = $user->adm;
 
                 return true;
             }
@@ -145,10 +146,20 @@ class User {
         $stmt = Connect::getInstance()->prepare($query);
         $stmt->bindParam(":id", $id);
         $stmt->execute();
-        $userLoged = $stmt->fetch();
+        $user = $stmt->fetch();
 
         if ($stmt->rowCount()==1) {
-            return $userLoged;
+
+            $this->id = $user->id;
+            $this->email = $user->email;
+            $this->name = $user->name;
+            $this->phoneNumber = $user->phoneNumber;
+            $this->dtBorn = $user->dtBorn;
+            $this->document = $user->document;
+            $this->photo = $user->photo;
+            $this->adm = $user->adm;
+
+            return $user;
         } else {
             return false;
         }
@@ -276,17 +287,6 @@ class User {
 		return $this;
 	}
 
-    public function getArray() : array
-    {
-        return ["user" => [
-            "id" => $this->getId(),
-            "name" => $this->getName(),
-            "email" => $this->getEmail(),
-            "document" => $this->getDocument(),
-            "photo" => $this->getPhoto()
-        ]];
-    }
-
 	/**
 	 * @return mixed
 	 */
@@ -302,4 +302,17 @@ class User {
 		$this->adm = $adm;
 		return $this;
 	}
+
+    public function getArray() : array
+    {
+        return ["user" => [
+            "id" => $this->getId(),
+            "name" => $this->getName(),
+            "email" => $this->getEmail(),
+            "dtBorn" => $this->getDtBorn(),
+            "document" => $this->getDocument(),
+            "photo" => $this->getPhoto(),
+            "adm" => $this->getAdm()
+        ]];
+    }
 }

@@ -13,7 +13,7 @@ class Api
         header('Content-Type: application/json; charset=UTF-8');
     }
 
-    public function getUser()
+    public function validateUser()
     {
         $headers = getallheaders();
 
@@ -40,7 +40,35 @@ class Api
         }
 
         echo json_encode($user->getArray(),JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+    }
 
+    public function getUser()
+    {
+        $headers = getallheaders();
+
+        if(empty($headers["Id"])){
+            $response = [
+                "code" => 400,
+                "type" => "bad_request",
+                "message" => "Informe o ID!"
+            ];
+            echo json_encode($response,JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+            return;
+        }
+
+        $user = new User();
+
+        if(!$user->selectUser($headers["Id"])){
+            $response = [
+                "code" => 401,
+                "type" => "unauthorized",
+                "message" => "Id não encontrado!"
+            ];
+            echo json_encode($response,JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+            return;
+        }
+
+        echo json_encode($user->getArray(),JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
     }
 
     public function getUsers()
@@ -57,7 +85,7 @@ class Api
                 $data["name"],
                 $data["phoneNumber"],
                 $data["password"],
-                $data["dtBorn"], //nao aceitou a formatação da data 00/00/0000 
+                $data["dtBorn"], 
                 $data["document"],
                 NUll
             );
@@ -72,6 +100,7 @@ class Api
             return;
         } 
     }
+
     public function updateUser(array $data)
     {
         if (!empty($data)) {
@@ -104,7 +133,7 @@ class Api
 
         $product = new Product();
 
-        if(!$product->findProductById($headers["Id"])){
+        if(!$product->selectProduct($headers["Id"])){
             $response = [
                 "code" => 401,
                 "type" => "unauthorized",
@@ -122,6 +151,50 @@ class Api
     {
         $products = new Product();
         echo json_encode($products->selectAllProducts(),JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+    }
+
+    public function insertProduct(array $data)
+    {
+        if (!empty($data)) {
+            $product = new Product(
+                $data["image"], // ACERTAR ENVIO DA URL
+                $data["name"],
+                $data["price"],
+                $data["description"],
+                "on"
+            );
+            $product->insertProduct();
+        } else {
+            $response = [
+                "code" => 400,
+                "type" => "bad_request",
+                "message" => "Informe todos os dados do produto!"
+            ];
+            echo json_encode($response,JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+            return;
+        }
+    }
+
+    public function updateProduct(array $data)
+    {
+        if (!empty($data)) {
+            $product = new Product(
+                $data["image"],
+                $data["name"],
+                $data["price"],
+                $data["description"],
+                $data["available"]
+            );
+            $product->updateProduct($data["id"]);
+        } else {
+            $response = [
+                "code" => 400,
+                "type" => "bad_request",
+                "message" => "Informe todos os dados do usuário!"
+            ];
+            echo json_encode($response,JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+            return;
+        }
     }
 
     public function getProvider()

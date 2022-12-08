@@ -59,7 +59,7 @@ class Product {
         }
     }
 
-    public function findProductById(int $idProduct)
+    public function selectProduct(int $idProduct)
     {
         $query = "SELECT * FROM products WHERE id = :idProduct";
         $stmt = Connect::getInstance()->prepare($query);

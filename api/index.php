@@ -13,6 +13,7 @@ $route->namespace("Source\App");
 
 $route->get("/user","Api:getUser");
 $route->get("/users","Api:getUsers");
+$route->get("/user-validate","Api:validateUser");
 $route->get("/product","Api:getProduct");
 $route->get("/products","Api:getProducts");
 $route->get("/provider","Api:getProvider");
@@ -20,13 +21,17 @@ $route->get("/providers","Api:getProviders");
 
 /* POST ROUTES */
 
-// http://www.localhost/playground/api/user/post/email//name//phoneNumber//password//dtBorn/NAO ACEITOU 00/00/0000/document/
+// http://www.localhost/playground/api/user/post/email//name//phoneNumber//password//dtBorn//document/
 $route->post("/user/post/email/{email}/name/{name}/phoneNumber/{phoneNumber}/password/{password}/dtBorn/{dtBorn}/document/{document}","Api:insertUser");
+// http://www.localhost/playground/api/product/post/image//name//price//description/
+$route->post("/product/post/image/{image}/name/{name}/price/{price}/description/{description}","Api:insertProduct");
 
 /* PUT ROUTES */
 
 // http://www.localhost/playground/api/user/put/photo//id/
 $route->put("/user/put/photo/{photo}/id/{id}","Api:updateUser");
+// http://www.localhost/playground/api/product/put/id//image//name//price//description//available/
+$route->put("/product/put/id/{id}/image/{image}/name/{name}/price/{price}/description/{description}/available/{available}","Api:updateProduct");
 
 $route->dispatch();
 
