@@ -5,12 +5,19 @@ namespace Source\App;
 use League\Plates\Engine;
 use Source\Models\Product;
 use Source\Models\Provider;
+use Source\Models\User;
 
 class Adm {
     private $view;
 
     public function __construct()
     {
+        $user = new User();
+
+        if (!$user->validateAdmUser($_SESSION["user"]["id"])) {
+            header("location:". url("app"));
+        }
+
         $this->view = new Engine(CONF_VIEW_ADM, 'php');
     }
 

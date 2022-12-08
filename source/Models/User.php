@@ -12,6 +12,7 @@ class User {
     private $dtBorn;
     private $document;
     public $photo;
+    private $adm;
 	/**
 	 * @param $email mixed 
 	 * @param $name mixed 
@@ -39,7 +40,7 @@ class User {
 
     public function insertUser() : bool
     {
-        $query = "INSERT INTO users VALUES (NULL, :email, :name, :phoneNumber, :password, :dtBorn, :document, NULL, NULL, NULL)";
+        $query = "INSERT INTO users VALUES (NULL, :email, :name, :phoneNumber, :password, :dtBorn, :document, NULL, false, NULL, NULL)";
         $stmt = Connect::getInstance()->prepare($query);
         $stmt->bindParam(":email", $this->email);
         $stmt->bindParam(":name", $this->name);
@@ -182,6 +183,36 @@ class User {
         }
     }
 
+    public function updateAdmUser(string $adm, int $id)
+    {
+        $query = "UPDATE users SET adm = :adm WHERE id = :id";
+                              
+        $stmt = Connect::getInstance()->prepare($query);
+        $stmt->bindParam(":adm", $adm);
+        $stmt->bindParam(":id",$id);
+        $stmt->execute();
+
+        if ($stmt->rowCount()==1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function validateAdmUser(int $id)
+    {
+        $query = "SELECT adm FROM users WHERE adm LIKE 'true' AND id = :id";
+        $stmt = Connect::getInstance()->prepare($query);
+        $stmt->bindParam(":id", $id);
+        $stmt->execute();
+
+        if ($stmt->rowCount()==1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 	public function getId() {
 		return $this->id;
 	}
@@ -255,4 +286,20 @@ class User {
             "photo" => $this->getPhoto()
         ]];
     }
+
+	/**
+	 * @return mixed
+	 */
+	public function getAdm() {
+		return $this->adm;
+	}
+	
+	/**
+	 * @param mixed $adm 
+	 * @return self
+	 */
+	public function setAdm($adm): self {
+		$this->adm = $adm;
+		return $this;
+	}
 }

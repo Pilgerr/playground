@@ -13,7 +13,8 @@
     <div class="container">
         <aside class="aside">
             <img src="<?=CONF_SITE_LOGO?>" alt="Logo Play Ground" class="logo-image">
-            <div class="div-aside"><a href="<?=url("adm/")?>" class="link-aside">Home</a></div>
+            <div class="div-aside"><a href="<?=url("app")?>" class="link-aside">Home inicial</a></div>
+            <div class="div-aside"><a href="<?=url("adm/")?>" class="link-aside">Home adm</a></div>
             <div class="div-aside"><a href="<?=url("adm/cadastro-produto")?>" class="link-aside">Cadastro de Produtos</a></div>
             <div class="div-aside"><a href="<?=url("adm/cadastro-fornecedor")?>" class="link-aside">Cadastro de Fornecedores</a></div>
             <div class="div-aside"><a href="<?=url("adm/edicao-produto")?>" class="link-aside">Edição de Produtos</a></div>

@@ -11,6 +11,7 @@ CREATE TABLE `users` (
                          `dtBorn` date NOT NULL,
                          `document` char(14) DEFAULT NULL,
                          `photo` varchar(255), 
+                         `adm` boolean,
                          `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
                          `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
                          PRIMARY KEY (`id`),

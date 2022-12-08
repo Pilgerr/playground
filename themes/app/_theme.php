@@ -21,8 +21,15 @@
           <li><a href="<?=url("app");?>">Home</a></li>
           <li><a href="<?=url("sobre");?>">Sobre</a></li>
           <li><a href="<?=url("contato");?>">Contato</a></li>
-          <!-- <li><a href="<?=url("produtos");?>">Cart</a></li>
-          <li><a href="<?=url("entrar");?>">Login</a></li> -->
+          <?php 
+            $user = new \Source\Models\User();
+
+            if ($user->validateAdmUser($_SESSION["user"]["id"])) {
+                ?>
+                <li><a href="<?=url("adm");?>">Adm</a></li>
+                <?php
+            }
+          ?>
           <li>
             <div class="dropdown">
             <a href="<?=url();?>">

@@ -4,6 +4,7 @@ namespace Source\App;
 
 use League\Plates\Engine;
 use Source\Models\Product;
+use Source\Models\User;
 
 class Web
 {
@@ -161,7 +162,7 @@ class Web
             }
 
             else {
-                $user = new \Source\Models\User(
+                $user = new User(
                     $data['register-email'],
                     $data['register-name'],
                     $data['register-phoneNumber'],
@@ -220,16 +221,30 @@ class Web
                 $remember = false;
             }
 
-            $user = new \Source\Models\User();
+            $user = new User();
 
             $returnValidate = $user->validateUser($email,$password,$remember);
 
             if ($returnValidate == true) {
                 ?> <div class="register-msg-sucess">Login efetuado com sucesso! Redirecionando ...</div> 
+                    <?php
+                        $id = $_SESSION["user"]["id"];
+                        $user = new User();
+                        $validate = $user->validateAdmUser($id);
+
+                    if ($validate == false) {
+                    ?>
                     <script>
-                    setTimeout(()=>{window.location.href = '<?=url("app");?>'}, 2000);
+                    setTimeout(()=>{window.location.href = '<?= url("app"); ?>'}, 2000);
                     </script>
                 <?php
+                    } elseif ($validate == true) {
+                            ?>
+                            <script>
+                            setTimeout(()=>{window.location.href = '<?= url("adm"); ?>'}, 2000);
+                            </script>
+                        <?php
+                    }
             } else {
                 ?> <div class="register-msg">Não possível efetuar o login</div> <?php
             }
