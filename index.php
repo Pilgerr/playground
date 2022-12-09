@@ -46,6 +46,7 @@ $route->post("/perfil", "App:profile");
 
 $route->group("/adm");
 $route->get("/", "Adm:home");
+$route->get("/gerar-pdf", "Adm:homePdf");
 $route->get("/cadastro-produto", "Adm:registerProduct");  
 $route->post("/cadastro-produto", "Adm:registerProduct");  
 $route->get("/edicao-produto", "Adm:editProduct");  

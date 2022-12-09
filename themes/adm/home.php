@@ -1,2 +1,2 @@
 <?php $this->layout("_theme"); ?>
-Dashboards
+<a href="<?=url("adm/gerar-pdf")?>">Dashboards</a>

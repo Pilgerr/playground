@@ -107,4 +107,10 @@ class Adm {
             echo $this->view->render("edit-provider",[ "providers" => $providers ]);
         }
     }
+
+    public function homePdf() : void
+    {
+       require __DIR__ . "/../../themes/adm/home-pdf.php";
+    }
+    
 }
