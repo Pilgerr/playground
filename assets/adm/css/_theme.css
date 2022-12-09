@@ -26,6 +26,7 @@
 
 .div-aside:hover {
     background-color: #dbdbdb;
+    border-left: 6px solid rgb(133, 196, 255);
 }
 
 .logo-image {
