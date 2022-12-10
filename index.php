@@ -55,6 +55,7 @@ $route->get("/cadastro-fornecedor", "Adm:registerProvider");
 $route->post("/cadastro-fornecedor", "Adm:registerProvider");  
 $route->get("/edicao-fornecedor", "Adm:editProvider");  
 $route->post("/edicao-fornecedor", "Adm:editProvider");  
+$route->post("/cadastro-venda", "Adm:registerSale");  
 
 /*
  * Erros Routes

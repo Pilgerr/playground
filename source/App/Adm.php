@@ -5,6 +5,7 @@ namespace Source\App;
 use League\Plates\Engine;
 use Source\Models\Product;
 use Source\Models\Provider;
+use Source\Models\Sale;
 use Source\Models\User;
 
 class Adm {
@@ -23,7 +24,9 @@ class Adm {
 
     public function home() : void
     {
-        echo $this->view->render("home");
+        $sale = new Sale();
+        $sales = $sale->selectAllSales();
+        echo $this->view->render("home",[ "sales" => $sales ]);
     }
 
     public function registerProduct(array $data)
@@ -111,6 +114,21 @@ class Adm {
     public function homePdf() : void
     {
        require __DIR__ . "/../../themes/adm/home-pdf.php";
+    }
+
+    public function registerSale(array $data)
+    {
+        $sale = new Sale(
+            NULL,
+            $data['register-total'],
+            $data['register-idUser']
+        );
+        $returnInsert = $sale->insertSale();
+        if ($returnInsert == true) {
+            header("location:". url("adm"));
+        } else {
+            header("location:". url("error"));
+        }
     }
     
 }
