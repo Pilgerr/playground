@@ -1,7 +1,7 @@
 <?php
 use Source\Core\Connect;
 
-$query = "SELECT * FROM users";
+$query = "SELECT * FROM sales";
 $stmt = Connect::getInstance()->prepare($query);
 $stmt->execute();
 
@@ -11,15 +11,17 @@ $data .= "<html lang='pt-br'>";
 $data .= "<head>";
 $data .= "<meta charset='UTF-8'>";
 //$data .= "<link rel='stylesheet' href='http://localhost/playground/assets/adm/css/home-pdf.css'";
-$data .= "<title>Teste - Gerar PDF</title>";
+$data .= "<title>Relatório de Vendas</title>";
 $data .= "</head>";
 $data .= "<body>";
-$data .= "<h1>Listar os Usuário</h1>";
+$data .= "<h1>Vendas</h1>";
 
 // Ler os registros retornado do BD
-while($user = $stmt->fetch(PDO::FETCH_ASSOC)){
-    extract($user);
-    $data .= "Nome: $phoneNumber <br>";
+while($sale = $stmt->fetch(PDO::FETCH_ASSOC)){
+    extract($sale);
+    $data .= "Total da Venda: R$ $total <br>";
+    $data .= "ID do Usuário: $idUser <br>";
+    $data .= "Realizada em: $created_at <br>";
     $data .= "<hr>";
 }
 
@@ -40,6 +42,5 @@ $dompdf->setPaper('A4', 'portrait');
 $dompdf->render();
 
 // Output the generated PDF to Browser
-//$dompdf->stream("PDF_file");
-$dompdf->stream();
+$dompdf->stream("relatorio_vendas");
 
