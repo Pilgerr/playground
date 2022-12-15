@@ -7,7 +7,7 @@ class Sale {
     private $id;
     private $total;
     private $idUser;
-    private $created;
+    private $created_at;
 
     /**
      * @param mixed $id 
@@ -69,15 +69,15 @@ class Sale {
 	}
 
     public function getCreated() {
-		return $this->created;
+		return $this->created_at;
 	}
 	
 	/**
-	 * @param mixed $created 
+	 * @param mixed $created_at 
 	 * @return self
 	 */
-	public function setCreated($created): self {
-		$this->created = $created;
+	public function setCreated($created_at): self {
+		$this->created_at = $created_at;
 		return $this;
 	}
 
@@ -123,7 +123,7 @@ class Sale {
             $this->id = $sale->id;
             $this->total = $sale->total;
             $this->idUser = $sale->idUser;
-            $this->created = $sale->created_at;
+            $this->created_at = $sale->created_at;
 
             return $sale;
         }
