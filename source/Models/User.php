@@ -218,8 +218,10 @@ class User {
         $stmt->execute();
 
         if ($stmt->rowCount()==1) {
+            $_SESSION["user"]["adm"] = true;
             return true;
         } else {
+            $_SESSION["user"]["adm"] = false;
             return false;
         }
     }

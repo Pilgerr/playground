@@ -15,6 +15,10 @@ class Adm {
     {
         $user = new User();
 
+        if (!isset($_SESSION["user"])) {
+            header("location:". url("app"));
+        }
+
         if (!$user->validateAdmUser($_SESSION["user"]["id"])) {
             header("location:". url("app"));
         }

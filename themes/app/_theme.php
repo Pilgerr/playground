@@ -12,7 +12,7 @@
 <body>
   <header>
     <nav>
-      <a class="logo" href="<?=url();?>"><img src="<?=url("assets/svg/");?>logo_play.svg" alt="Logo Play Ground"
+      <a class="logo" href="<?=url("app");?>"><img src="<?=url("assets/svg/");?>logo_play.svg" alt="Logo Play Ground"
           width="70px" height="70px"></a>
       <div class="mobile-menu">
         <div class="line1"></div>
@@ -23,25 +23,19 @@
         <li><a href="<?=url("app");?>">Home</a></li>
         <li><a href="<?=url("sobre");?>">Sobre</a></li>
         <li><a href="<?=url("contato");?>">Contato</a></li>
-        <?php 
-            $user = new \Source\Models\User();
-
-            if (empty($_SESSION['user']['id'])) {
-              header("location:". url(""));
-            }
-            elseif ($user->validateAdmUser($_SESSION["user"]["id"])) {
-              ?>
-        <li><a href="<?=url("adm");?>">Adm</a></li>
-        <?php
-            }
+          <?php if ($_SESSION['user']['adm'] == true) {
           ?>
+        <li><a href="<?=url("adm");?>">Adm</a></li>
+                <?php
+                  }
+                    ?>          
         <li>
           <div class="dropdown">
-            <a href="<?=url();?>">
+            <a href="<?=url("app");?>">
               <img src="https://i.im.ge/2022/10/21/2NeiaL.user-icon.png" alt="Ícone Usuario">
             </a>
             <div class="dropdown-content">
-              <a href="<?=url("entrar");?>">
+              <a href="<?=url("perfil");?>">
                 Olá <?php if (isset($_SESSION['user']['name'])) {
                     echo $_SESSION['user']['name']."!";
                   } elseif (isset($_COOKIE['userName'])) {
@@ -77,7 +71,7 @@
   <footer>
     <nav>
       <p>&copy; 2022 Company, Inc</p>
-      <a class="logo" href="<?=url();?>"><img src="<?=url("assets/svg/");?>logo_play.svg" alt="Logo Play Ground"
+      <a class="logo" href="<?=url("app");?>"><img src="<?=url("assets/svg/");?>logo_play.svg" alt="Logo Play Ground"
           width="70px" height="70px"></a>
       <ul class="footer-list">
         <li><a href="<?=url("app");?>">Home</a></li>
