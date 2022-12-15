@@ -4,6 +4,7 @@ namespace Source\App;
 
 use Source\Models\Product;
 use Source\Models\Provider;
+use Source\Models\Sale;
 use Source\Models\User;
 
 class Api
@@ -231,6 +232,61 @@ class Api
     {
         $providers = new Provider();
         echo json_encode($providers->selectAllProviders(),JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+    }
+
+    public function getSale(array $data)
+    {
+
+        if(empty($data["id"])){
+            $response = [
+                "code" => 400,
+                "type" => "bad_request",
+                "message" => "Informe o ID!"
+            ];
+            echo json_encode($response,JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+            return;
+        }
+
+        $sale = new Sale();
+
+        if(!$sale->selectSale($data["id"])){
+            $response = [
+                "code" => 401,
+                "type" => "unauthorized",
+                "message" => "Id não encontrado!"
+            ];
+            echo json_encode($response,JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+            return;
+        }
+
+        echo json_encode($sale->getArray(),JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+        
+    }
+
+    public function getSales()
+    {
+        $sales = new Sale();
+        echo json_encode($sales->selectAllSales(),JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+    }
+
+    public function insertSale(array $data)
+    {
+        if (!empty($data)) {
+            $sale = new Sale(
+                NULL,
+                $data["total"],
+                $data["idUser"]
+            );
+            $sale->insertSale();
+        } else {
+            $response = [
+                "code" => 400,
+                "type" => "bad_request",
+                "message" => "Informe todos os dados da venda!"
+            ];
+            echo json_encode($response,JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+            return;
+        } 
     }
 
 }

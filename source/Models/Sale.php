@@ -129,4 +129,14 @@ class Sale {
         }
     }
 
+	public function getArray() : array
+    {
+        return ["user" => [
+            "id" => $this->getId(),
+            "total" => $this->getTotal(),
+            "idUser" => $this->getIdUser(),
+            "created" => $this->getCreated()
+        ]];
+    }
+
 }
