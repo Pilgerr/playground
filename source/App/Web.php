@@ -285,7 +285,8 @@ class Web
 
     public function logout () : void 
     {
-        session_destroy();
+        unset( $_SESSION['cart'] ); 
+        unset( $_SESSION['cartItem'] ); 
         header("location:". url("carrinho"));
     }
 

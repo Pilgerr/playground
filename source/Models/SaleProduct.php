@@ -115,4 +115,54 @@ class SaleProduct
             "created_at" => $this->getCreated_at()
         ]];
     }
+
+	public function insertSaleProduct() : bool
+    {
+        $query = "INSERT INTO sales_products VALUES (NULL, :idSale, :idProduct, :price, NULL, NULL)";
+        $stmt = Connect::getInstance()->prepare($query);
+        $stmt->bindParam(":idSale", $this->idSale);
+        $stmt->bindParam(":idProduct", $this->idProduct);
+		$stmt->bindParam(":price", $this->price);
+        $stmt->execute();
+
+        if ($stmt->rowCount()==1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function selectAllSalesProducts()
+    {
+        $query = "SELECT * FROM sales_products";
+        $stmt = Connect::getInstance()->prepare($query);
+        $stmt->execute();
+
+        if ($stmt->rowCount()>0) {
+            return $stmt->rowCount();
+        } else {
+            return false;
+        }
+    }
+
+    public function selectSaleProduct(int $id)
+    {
+        $query = "SELECT * FROM sales_products WHERE id = :id";
+        $stmt = Connect::getInstance()->prepare($query);
+        $stmt->bindParam(":id",$id);
+        $stmt->execute();
+        $sale_product = $stmt->fetch();
+        if($stmt->rowCount() == 0){
+            return false;
+        } else {
+
+            $this->id = $sale_product->id;
+            $this->idSale = $sale_product->idSale;
+            $this->idProduct = $sale_product->idProduct;
+			$this->price = $sale_product->price;
+            $this->created_at = $sale_product->created_at;
+
+            return $sale_product;
+        }
+    }
 }
