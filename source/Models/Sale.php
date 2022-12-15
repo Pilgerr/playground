@@ -14,7 +14,7 @@ class Sale {
      * @param mixed $total 
      * @param mixed $idUser 
      */
-    public function __construct(?int $id = NULL, ?string $total = NULL, ?string $idUser = NULL) {
+    public function __construct(?int $id = NULL, ?int $total = NULL, ?int $idUser = NULL) {
     	$this->id = $id;
     	$this->total = $total;
     	$this->idUser = $idUser;

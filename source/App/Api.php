@@ -41,6 +41,7 @@ class Api
         }
 
         echo json_encode($user->getArray(),JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+        
     }
 
     public function getUser()
@@ -73,9 +74,24 @@ class Api
     }
 
     public function getUsers()
-    {
-        $users = new User();
-        echo json_encode($users->selectAllUsers(),JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+    {   
+        $key = "djeiow@781";
+        $headers = getallheaders();
+
+        if ($headers["Key"] == $key) {
+            $users = new User();
+            echo json_encode($users->selectAllUsers(),JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+        } else {
+            $response = [
+                "code" => 400,
+                "type" => "bad_request",
+                "message" => "Informe a chave de acesso!"
+            ];
+            echo json_encode($response,JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+            return;
+        } 
+
+
     }
 
     public function insertUser(array $data)
@@ -91,6 +107,12 @@ class Api
                 NUll
             );
             $user->insertUser();
+             $response = [
+                "code" => 200,
+                "type" => "success",
+                "message" => "Usuário alterado com sucesso!"
+            ];
+            echo json_encode($response,JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
         } else {
             $response = [
                 "code" => 400,
@@ -107,6 +129,12 @@ class Api
         if (!empty($data)) {
             $user = new User();
             $user->updatePhotoUser($data["photo"], $data["id"]);
+            $response = [
+                "code" => 200,
+                "type" => "success",
+                "message" => "Usuário alterado com sucesso!"
+            ];
+            echo json_encode($response,JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
         } else {
             $response = [
                 "code" => 400,
@@ -165,6 +193,12 @@ class Api
                 "on"
             );
             $product->insertProduct();
+            $response = [
+                "code" => 200,
+                "type" => "success",
+                "message" => "Usuário alterado com sucesso!"
+            ];
+            echo json_encode($response,JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
         } else {
             $response = [
                 "code" => 400,
@@ -187,6 +221,12 @@ class Api
                 $data["available"]
             );
             $product->updateProduct($data["id"]);
+             $response = [
+                "code" => 200,
+                "type" => "success",
+                "message" => "Usuário alterado com sucesso!"
+            ];
+            echo json_encode($response,JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
         } else {
             $response = [
                 "code" => 400,
@@ -278,6 +318,12 @@ class Api
                 $data["idUser"]
             );
             $sale->insertSale();
+             $response = [
+                "code" => 200,
+                "type" => "success",
+                "message" => "Usuário alterado com sucesso!"
+            ];
+            echo json_encode($response,JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
         } else {
             $response = [
                 "code" => 400,
