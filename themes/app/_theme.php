@@ -55,15 +55,13 @@
               <img src="https://i.im.ge/2022/10/21/2NeUBc.cart-icon.png" alt="Ícone Carrinho de Compras">
             </a>
               <div class="dropdown-content">
-                  <a href="<?=url("produtos");?>">
-                  Produtos: <?php if (isset($_SESSION['cart'])) {
+              <a href="<?=url("produtos");?>"> Produtos </a>
+              <a href="<?=url("carrinho");?>">Carrinho: <?php if (isset($_SESSION['cart'])) {
                     echo $_SESSION['cart']['quantity'];
                   } else {
                     echo "0";
                   }
-                  ?>
-                  </a>
-                  <a href="<?=url("carrinho");?>">Carrinho</a>
+                  ?></a>
               </div>
             </div>
           </li>

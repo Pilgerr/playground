@@ -1,11 +1,8 @@
-<?php $this->layout("_theme",[ "products" => $products ])?>
+<?php $this->layout("_theme",[ "product" => $product ])?>
 <link rel="stylesheet" href="<?=url("assets/web/");?>css/view-product.css">
 
 <body class="body-view">
     <main class="main-view">
-        <?php
-            foreach ($products as $product){
-        ?>
         <div class="products">
             <img src="<?=$product->image?>" alt="<?=$product->name?>" width="200px" height="200px" class="img-product">
         </div>
@@ -24,7 +21,6 @@
             </a>
         </div>
         <?php
-            }
             if (isset($_GET['adicionar'])) {
                 $idGet = (int) $_GET['adicionar'];
                 if ($product->id == $idGet) {

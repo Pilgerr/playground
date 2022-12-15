@@ -260,10 +260,10 @@ class Web
             public function viewProduct(array $data)
             {
                 if(!empty($data)){
-                    $product = new Product();
-                    $products = $product->selectProduct($data["idProduct"]);
+                    $pdct = new Product();
+                    $product = $pdct->selectProduct($data["idProduct"]);
                 }
-                echo $this->view->render("view-product",[ "products" => $products]);
+                echo $this->view->render("view-product",[ "product" => $product]);
             }
             public function cart () : void
             {
