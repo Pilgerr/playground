@@ -1,11 +1,8 @@
-<?php $this->layout("_theme",[ "products" => $products ])?>
+<?php $this->layout("_theme",[ "product" => $product ])?>
 <link rel="stylesheet" href="<?=url("assets/web/");?>css/view-product.css">
 
 <body class="body-view">
     <main class="main-view">
-        <?php
-            foreach ($products as $product){
-        ?>
         <div class="products">
             <img src="<?=$product->image?>" alt="<?=$product->name?>" width="200px" height="200px" class="img-product">
         </div>
@@ -13,7 +10,7 @@
             <h1 class="titles-product"><?=$product->name?></h1>
             <h4 class="titles-product"><?=$product->description?></h4>
             <h2 class="titles-product">R$ <?=$product->price?></h2>
-            <a href="#" class="a-buy">
+            <a href="<?=url("produtos/$product->id?adicionar=$product->id")?>" class="a-buy">
                 <svg viewBox="0 0 32 24" aria-labelledby="pdpBasketIcon pdpBasketDesc" width="25" height="15"
                     fill="#fff" class="src__BasketUI-sc-1cpjf6b-0 hynVVk" class="svg-buy">
                     <path fill="inherit"
@@ -24,6 +21,25 @@
             </a>
         </div>
         <?php
+            if (isset($_GET['adicionar'])) {
+                $idGet = (int) $_GET['adicionar'];
+                if ($product->id == $idGet) {
+                    if (isset($_SESSION['cartItem'][$idGet]) && isset($_SESSION['cart'])) {
+                        $_SESSION['cart']['quantity']++;
+                        $_SESSION['cart']['total']+= $product->price;
+                        $_SESSION['cartItem'][$idGet]['quantity']++;
+                    } elseif (!isset($_SESSION['cartItem'][$idGet]) && !isset($_SESSION['cart'])) {
+                            $_SESSION['cartItem'][$idGet] = array('quantity'=>1, 'name'=>$product->name, 'description'=>$product->description, 'price'=>$product->price, 'id'=>$product->id);
+                            $_SESSION['cart'] = array('quantity'=>1, 'total'=>$product->price);
+                    } elseif (!isset($_SESSION['cartItem'][$idGet])) {
+                            $_SESSION['cartItem'][$idGet] = array('quantity'=>1, 'name'=>$product->name, 'description'=>$product->description, 'price'=>$product->price, 'id'=>$product->id);
+                            $_SESSION['cart']['quantity']++;
+                            $_SESSION['cart']['total']+= $product->price;
+                    } 
+                    echo '<script>alert("O item foi adicionado ao carrinho!");</script>';
+                } else {
+                    echo '<script>alert("Item não encontrado :(");</script>';
+                }
             }
         ?>
     </main>

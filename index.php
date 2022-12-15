@@ -17,7 +17,7 @@ $route->namespace("Source\App");
 $route->get("/","Web:home");
 $route->get("/sobre","Web:about");
 $route->get("/contato","Web:contact");
-$route->get("/carrinho","Web:cart");
+$route->get("/produtos","Web:products");
 $route->get("/entrar","Web:loginAndRegister");
 $route->get("/cadastro-usuario","Web:registerUser");
 $route->post("/cadastro-usuario","Web:registerUser");
@@ -26,19 +26,19 @@ $route->post("/cadastro-endereco","Web:registerAddress");
 $route->get("/login","Web:login");
 $route->post("/login","Web:login");
 $route->get("/produtos/{idProduct}","Web:viewProduct");
-
+$route->get("/carrinho", "Web:cart");
+$route->get("/logout","Web:logout");
+//$route->post("/produtos/{idProduct}","Web:viewProductAdd");
+ 
 /*
  * App Routs
  */
 
 $route->group("/app"); // agrupa em /app
 $route->get("/","App:home");
-$route->get("/listar","App:list");
-$route->get("/pdf","App:createPDF");
-$route->group(null); // desagrupo do /app
-$route->group("/admin"); // agrupa em /admin
-$route->get("/","Adm:home");
-$route->group(null); // desagrupo do /admin
+$route->get("/perfil", "App:profile");
+$route->post("/perfil", "App:profile");
+$route->get("/logout","App:logout");
 
 /*
  * Adm Routs
@@ -46,6 +46,7 @@ $route->group(null); // desagrupo do /admin
 
 $route->group("/adm");
 $route->get("/", "Adm:home");
+$route->get("/gerar-pdf", "Adm:homePdf");
 $route->get("/cadastro-produto", "Adm:registerProduct");  
 $route->post("/cadastro-produto", "Adm:registerProduct");  
 $route->get("/edicao-produto", "Adm:editProduct");  
@@ -54,6 +55,7 @@ $route->get("/cadastro-fornecedor", "Adm:registerProvider");
 $route->post("/cadastro-fornecedor", "Adm:registerProvider");  
 $route->get("/edicao-fornecedor", "Adm:editProvider");  
 $route->post("/edicao-fornecedor", "Adm:editProvider");  
+$route->post("/cadastro-venda", "Adm:registerSale");  
 
 /*
  * Erros Routes

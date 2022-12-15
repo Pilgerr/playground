@@ -4,6 +4,7 @@ namespace Source\App;
 
 use League\Plates\Engine;
 use Source\Models\Product;
+use Source\Models\User;
 
 class Web
 {
@@ -24,12 +25,12 @@ class Web
         echo $this->view->render("about"); 
     }
 
-    public function cart()
+    public function products()
     {
         $product = new Product();
         $products = $product->selectAllProducts();
 
-        echo $this->view->render("cart",[ "products" => $products ]);
+        echo $this->view->render("products",[ "products" => $products ]);
 
     }
 
@@ -96,7 +97,7 @@ class Web
             if ($returnInsert == true) {
                 ?> <div class="register-msg-sucess">Cadastrando endereço...</div> 
                        <script>
-                        setTimeout(()=>{window.location.href = '<?=url("")?>'}, 2000)
+                        setTimeout(()=>{window.location.href = '<?=url("app")?>'}, 2000)
                        </script>
                 <?php
             } else {
@@ -161,7 +162,7 @@ class Web
             }
 
             else {
-                $user = new \Source\Models\User(
+                $user = new User(
                     $data['register-email'],
                     $data['register-name'],
                     $data['register-phoneNumber'],
@@ -214,31 +215,62 @@ class Web
             $email = $data["login-email"];
             $password = $data["login-password"];
 
-            $user = new \Source\Models\User();
+            if(!empty($data["login-remember"])){
+                $remember = true;
+            } else {
+                $remember = false;
+            }
 
-            $returnValidate = $user->validateUser($email,$password);
+            $user = new User();
+
+            $returnValidate = $user->validateUser($email,$password,$remember);
 
             if ($returnValidate == true) {
                 ?> <div class="register-msg-sucess">Login efetuado com sucesso! Redirecionando ...</div> 
+                    <?php
+                        $id = $_SESSION["user"]["id"];
+                        $user = new User();
+                        $validate = $user->validateAdmUser($id);
+
+                    if ($validate == false) {
+                    ?>
                     <script>
-                    setTimeout(()=>{window.location.href = '<?=url("")?>'}, 2000)
+                    setTimeout(()=>{window.location.href = '<?= url("app"); ?>'}, 2000);
                     </script>
                 <?php
+                    } elseif ($validate == true) {
+                            ?>
+                            <script>
+                            setTimeout(()=>{window.location.href = '<?= url("adm"); ?>'}, 2000);
+                            </script>
+                        <?php
+                    }
             } else {
                 ?> <div class="register-msg">Não possível efetuar o login</div> <?php
             }
         }
         }
-                echo $this->view->render("login");
+            if (!empty($_COOKIE["user"]["email"])) {
+                $emailCookie = $_COOKIE["user"]["email"];
+                echo $this->view->render("login",[ "emailCookie" => $emailCookie]);
+            }
+            echo $this->view->render("login");
             }
 
             public function viewProduct(array $data)
             {
                 if(!empty($data)){
-                    $product = new Product();
-                    $products = $product->findProductById($data["idProduct"]);
+                    $pdct = new Product();
+                    $product = $pdct->selectProduct($data["idProduct"]);
                 }
-                echo $this->view->render("view-product",[ "products" => $products]);
+                echo $this->view->render("view-product",[ "product" => $product]);
+            }
+            public function cart () : void
+            {
+                $product = new Product();
+                $products = $product->selectAllProducts();
+        
+                echo $this->view->render("cart",[ "products" => $products ]);
             }
 
     public function error(array $data) : void
@@ -249,6 +281,13 @@ class Web
             "title" => "Erro {$data["errcode"]} | " . CONF_SITE_NAME,
             "error" => $data["errcode"]
         ]);
+    }
+
+    public function logout () : void 
+    {
+        unset( $_SESSION['cart'] ); 
+        unset( $_SESSION['cartItem'] ); 
+        header("location:". url("carrinho"));
     }
 
 }

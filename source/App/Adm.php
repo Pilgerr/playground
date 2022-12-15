@@ -5,18 +5,32 @@ namespace Source\App;
 use League\Plates\Engine;
 use Source\Models\Product;
 use Source\Models\Provider;
+use Source\Models\Sale;
+use Source\Models\User;
 
 class Adm {
     private $view;
 
     public function __construct()
     {
-        $this->view = new Engine(CONF_VIEW_ADMIN, 'php');
+        $user = new User();
+
+        if (!isset($_SESSION["user"])) {
+            header("location:". url("app"));
+        }
+
+        if (!$user->validateAdmUser($_SESSION["user"]["id"])) {
+            header("location:". url("app"));
+        }
+
+        $this->view = new Engine(CONF_VIEW_ADM, 'php');
     }
 
     public function home() : void
     {
-        echo $this->view->render("home");
+        $sale = new Sale();
+        $sales = $sale->selectAllSales();
+        echo $this->view->render("home",[ "sales" => $sales ]);
     }
 
     public function registerProduct(array $data)
@@ -26,7 +40,8 @@ class Adm {
                 $data['register-image'],
                 $data['register-name'],
                 $data['register-price'],
-                $data['register-description']
+                $data['register-description'],
+                "on"
             );
             $returnInsert = $product->insertProduct();
             if ($returnInsert == true) {
@@ -41,8 +56,14 @@ class Adm {
     public function editProduct(array $data)
     {
         if ($data) {
-            $product = new Product();
-            $returnInsert = $product->updateProduct($data['edit-id'], $data['edit-available']);
+            $product = new Product(
+                $data['edit-image'],
+                $data['edit-name'],
+                $data['edit-price'],
+                $data['edit-description'],
+                $data['edit-available']
+            );
+            $returnInsert = $product->updateProduct($data['edit-id']);
             if ($returnInsert == false) {
                 header("location:". url("adm/edicao-produto"));
             } else {
@@ -93,4 +114,25 @@ class Adm {
             echo $this->view->render("edit-provider",[ "providers" => $providers ]);
         }
     }
+
+    public function homePdf() : void
+    {
+       require __DIR__ . "/../../themes/adm/home-pdf.php";
+    }
+
+    public function registerSale(array $data)
+    {
+        $sale = new Sale(
+            NULL,
+            $data['register-total'],
+            $data['register-idUser']
+        );
+        $returnInsert = $sale->insertSale();
+        if ($returnInsert == true) {
+            header("location:". url("adm"));
+        } else {
+            header("location:". url("error"));
+        }
+    }
+    
 }

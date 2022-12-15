@@ -19,11 +19,53 @@
         </div>
         <ul class="nav-list">
           <li><a href="<?=url();?>">Home</a></li>
-          <li><a href="<?=url("sobre");?>">About</a></li>
-          <li><a href="<?=url("contato");?>">Contact</a></li>
-          <li><a href="<?=url("carrinho");?>">Cart</a></li>
-          <li><a href="<?=url("entrar");?>">Login</a></li>
-          <li><a href="<?=url("adm");?>">Adm</a></li>
+          <li><a href="<?=url("sobre");?>">Sobre</a></li>
+          <li><a href="<?=url("contato");?>">Contato</a></li>
+          <li>
+            <div class="dropdown">
+            <a href="<?=url();?>">
+              <img src="https://i.im.ge/2022/10/21/2NeiaL.user-icon.png" alt="Ícone Usuario">
+              </a>
+              <div class="dropdown-content">
+                  <a href="<?=url("entrar");?>">
+                  Olá <?php if (isset($_SESSION['user']['name'])) {
+                    echo $_SESSION['user']['name']."!";
+                                        ?>
+                    <a href="<?=url("app/perfil");?>">Perfil</a>
+                    <a href="<?=url("app/logout");?>">Sair</a>
+                    <?php
+                  } elseif (isset($_COOKIE['userName'])) {
+                    echo $_COOKIE["userName"]."!";
+                    ?>
+                    <a href="<?=url("app/perfil");?>">Perfil</a>
+                    <a href="<?=url("app/logout");?>">Sair</a>
+                    <?php
+                  } else {
+                    ?>
+                    Visitante!
+                    <?php
+                  }
+                  ?>
+                  </a>
+              </div>
+            </div>
+          </li>
+          <li>
+          <div class="dropdown">
+            <a href="<?=url();?>">
+              <img src="https://i.im.ge/2022/10/21/2NeUBc.cart-icon.png" alt="Ícone Carrinho de Compras">
+            </a>
+              <div class="dropdown-content">
+              <a href="<?=url("produtos");?>"> Produtos </a>
+              <a href="<?=url("carrinho");?>">Carrinho: <?php if (isset($_SESSION['cart'])) {
+                    echo $_SESSION['cart']['quantity'];
+                  } else {
+                    echo "0";
+                  }
+                  ?></a>
+              </div>
+            </div>
+          </li>
         </ul>
       </nav>
     </header>
@@ -34,8 +76,8 @@
     <a class="logo" href="<?=url();?>"><img src="<?=url("assets/svg/");?>logo_play.svg" alt="Logo Play Ground" width="70px" height="70px"></a>
     <ul class="footer-list">
       <li><a href="<?=url();?>">Home</a></li>
-      <li><a href="<?=url("sobre");?>">About</a></li>
-      <li><a href="<?=url("contato");?>">Contact</a></li>
+      <li><a href="<?=url("sobre");?>">Sobre</a></li>
+      <li><a href="<?=url("contato");?>">Contato</a></li>
     </ul>
     </nav>
   </footer>

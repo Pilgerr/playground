@@ -10,6 +10,8 @@ CREATE TABLE `users` (
                          `password` varchar(255) NOT NULL,
                          `dtBorn` date NOT NULL,
                          `document` char(14) DEFAULT NULL,
+                         `photo` varchar(255), 
+                         `adm` boolean,
                          `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
                          `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
                          PRIMARY KEY (`id`),
@@ -56,4 +58,34 @@ CREATE TABLE `providers` (
                          `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
                          `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
                          PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `sales`;
+CREATE TABLE `sales` (
+                             `id` int(11) NOT NULL AUTO_INCREMENT,
+                             `total` int(11) NOT NULL,
+                             `idUser` int(11) NOT NULL,
+                            -- need "ids" indeed just "id" `idProduct` int(11) NOT NULL,
+                             `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+                             `udated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
+                             PRIMARY KEY (`id`),
+                             KEY `fk_sales_users_idx` (`idUser`),
+                             CONSTRAINT `fk_sales_users` FOREIGN KEY (`idUser`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `sales_products`;
+CREATE TABLE `sales_products` (
+                            `id` INT(11) NOT NULL,
+                            `idSale` INT(11) NOT NULL,
+                            `idProduct` INT(11) NOT NULL,
+                            `price` DECIMAL(10,2) NOT NULL,
+                            `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+                            `udated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
+                            PRIMARY KEY (`id`),
+                           
+                            KEY `fk_sales_products_sales_idx` (`idSale`),
+                            CONSTRAINT `fk_sales_products_sales`FOREIGN KEY (`idSale`) REFERENCES `sales` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+                            
+                            KEY `fk_sales_products_products_idx` (`idProduct`),
+                            CONSTRAINT `fk_sales_products_products` FOREIGN KEY (`idProduct`) REFERENCES `products` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

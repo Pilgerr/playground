@@ -43,12 +43,11 @@ class Provider {
         $query = "SELECT * FROM providers";
         $stmt = Connect::getInstance()->prepare($query);
         $stmt->execute();
-        $providers = $stmt->fetchAll();
 
         if ($stmt->rowCount()>0) {
-            return $providers;
+            return $stmt->fetchAll();
         } else {
-            echo "Erro";
+            return false;
         }
     }
 
@@ -68,5 +67,98 @@ class Provider {
         } else {
             return $products;
         }
+    }
+
+    public function selectProvider(int $idProvider)
+    {
+        $query = "SELECT * FROM providers WHERE id = :idProvider";
+        $stmt = Connect::getInstance()->prepare($query);
+        $stmt->bindParam(":idProvider",$idProvider);
+        $stmt->execute();
+        $provider = $stmt->fetch();
+        if($stmt->rowCount() == 0){
+            return false;
+        } else {
+            $this->name = $provider->name;
+            $this->phoneNumber = $provider->phoneNumber;
+            $this->linkInstagram = $provider->linkInstagram;
+            $this->typeProduct = $provider->typeProduct;
+
+            return $provider;
+        }
+    }
+
+	/**
+	 * @return mixed
+	 */
+	public function getName() {
+		return $this->name;
+	}
+	
+	/**
+	 * @param mixed $name 
+	 * @return self
+	 */
+	public function setName($name): self {
+		$this->name = $name;
+		return $this;
+	}
+	
+	/**
+	 * @return mixed
+	 */
+	public function getPhoneNumber() {
+		return $this->phoneNumber;
+	}
+	
+	/**
+	 * @param mixed $phoneNumber 
+	 * @return self
+	 */
+	public function setPhoneNumber($phoneNumber): self {
+		$this->phoneNumber = $phoneNumber;
+		return $this;
+	}
+	
+	/**
+	 * @return mixed
+	 */
+	public function getLinkInstagram() {
+		return $this->linkInstagram;
+	}
+	
+	/**
+	 * @param mixed $linkInstagram 
+	 * @return self
+	 */
+	public function setLinkInstagram($linkInstagram): self {
+		$this->linkInstagram = $linkInstagram;
+		return $this;
+	}
+	
+	/**
+	 * @return mixed
+	 */
+	public function getTypeProduct() {
+		return $this->typeProduct;
+	}
+	
+	/**
+	 * @param mixed $typeProduct 
+	 * @return self
+	 */
+	public function setTypeProduct($typeProduct): self {
+		$this->typeProduct = $typeProduct;
+		return $this;
+	}
+
+    public function getArray() : array
+    {
+        return ["product" => [
+            "name" => $this->getName(),
+            "phoneNumber" => $this->getPhoneNumber(),
+            "linkInstagram" => $this->getLinkInstagram(),
+            "typeProduct" => $this->getTypeProduct()
+        ]];
     }
 }
